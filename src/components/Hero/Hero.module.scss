@@ -1,0 +1,223 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 48px 0 96px;
+}
+
+@media (min-width: 1024px) {
+  .hero { padding: 80px 0 128px; }
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.30;
+  pointer-events: none;
+}
+
+.blobPrimary {
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(43, 108, 238, 0.20);
+  border-radius: 9999px;
+  filter: blur(64px);
+}
+
+.blobSecondary {
+  position: absolute;
+  bottom: -10%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: rgba(147, 197, 253, 0.20);
+  border-radius: 9999px;
+  filter: blur(64px);
+}
+
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.grid {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: 1.05fr 0.95fr; }
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .copy { text-align: left; }
+}
+
+.title {
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-size: 40px;
+}
+@media (min-width: 1024px) {
+  .title { font-size: 64px; }
+}
+
+.accent { color: var(--primary); }
+
+.lead {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 640px;
+  margin: 0 auto;
+}
+@media (min-width: 1024px) {
+  .lead { margin: 0; }
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 4px;
+}
+@media (min-width: 1024px) {
+  .ctaRow { justify-content: flex-start; }
+}
+
+.primaryBtn,
+.secondaryBtn {
+  height: 48px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: 800;
+  transition: transform 160ms ease, filter 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.primaryBtn {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(43, 108, 238, 0.30);
+}
+.primaryBtn:hover { filter: brightness(0.92); transform: translateY(-1px); }
+
+.arrow { margin-left: 10px; font-size: 18px; }
+
+.secondaryBtn {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+:global(html.theme-dark) .secondaryBtn {
+  background: rgba(255,255,255,0.06);
+}
+.secondaryBtn:hover { transform: translateY(-1px); }
+
+.stack {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .stack { align-items: flex-start; }
+}
+
+.stackLabel {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(120, 130, 150, 0.9);
+}
+
+.stackDots {
+  display: flex;
+  gap: 14px;
+  opacity: 0.7;
+  filter: grayscale(1);
+  transition: filter 200ms ease, opacity 200ms ease;
+}
+.stackDots:hover { filter: grayscale(0); opacity: 1; }
+
+.stackDots span {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.08);
+}
+:global(html.theme-dark) .stackDots span {
+  background: rgba(255,255,255,0.12);
+}
+
+.media {
+  display: flex;
+  justify-content: center;
+}
+
+.heroImage {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: rgba(0,0,0,0.06);
+  position: relative;
+
+  /* placeholder bakgrund. Byt till GatsbyImage senare */
+  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJUrC-LCkQgrreSX1sNAmK47XGzTSW4FVrWyQ0CxG1-jWnAyoe3Jy1RHw-SqLcRRnns47eetPOm2rG3MPluAEKBXrhL3vIo8ksQ11QdwGXrJ_dRVWAPFQ4EPRRnFYMHcjwIFy63Spq0VYDfB5AWFSUjR_1WqrX2whAIlErFB6ZM1uz9xM6rnURz8MXdFB1_r6F2MaChfhXJbitMmLyCayi1b-bMAU9RD1DI7XJ59J-5QnGAFxfIqHDkyafrFFEZ0b72h9cUcfuI5s");
+  background-size: cover;
+  background-position: center;
+}
+
+@media (min-width: 1024px) {
+  .heroImage { aspect-ratio: auto; height: 600px; }
+}
+
+:global(html.theme-dark) .heroImage {
+  background-color: rgba(255,255,255,0.06);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.50), rgba(0,0,0,0));
+}
+
+.callout {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  color: #fff;
+}
+
+.calloutBox {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.20);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.calloutTitle { margin: 0; font-weight: 800; font-size: 13px; }
+.calloutText { margin: 6px 0 0; font-size: 12px; opacity: 0.85; }
