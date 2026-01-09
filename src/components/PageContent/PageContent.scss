@@ -1,0 +1,35 @@
+.page-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .gatsby-image-wrapper {
+    margin: 2rem 0;
+    border-radius: 8px;
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    color: #555;
+    margin: 1.5rem 0;
+    line-height: 1.6;
+  }
+
+  .body-content {
+    line-height: 1.8;
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    h2,
+    h3 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
