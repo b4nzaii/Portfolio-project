@@ -52,19 +52,36 @@ export default function ProjectTemplate({ data }: PageProps<Data>) {
             style={{
               marginTop: "3rem",
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
               gap: "1.5rem",
             }}
           >
             {project.gallery.map((img, i) => {
               const image = getImage(img);
               return image ? (
-                <GatsbyImage
+                <div
                   key={i}
-                  image={image}
-                  alt={img.description ?? `Project image ${i + 1}`}
-                  style={{ borderRadius: 12 }}
-                />
+                  style={{
+                    position: "relative",
+                    aspectRatio: "16 / 9",
+                    overflow: "hidden",
+                    borderRadius: "12px",
+                    backgroundColor: "rgba(0, 0, 0, 0.05)",
+                  }}
+                >
+                  <GatsbyImage
+                    image={image}
+                    alt={img.description ?? `Project image ${i + 1}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                    imgStyle={{
+                      objectFit: "contain",
+                      objectPosition: "center",
+                    }}
+                  />
+                </div>
               ) : null;
             })}
           </section>
@@ -84,8 +101,11 @@ export const query = graphql`
       gallery {
         gatsbyImageData(
           width: 1600
+          height: 900
           placeholder: BLURRED
           formats: [AUTO, WEBP, AVIF]
+          layout: CONSTRAINED
+          resizingBehavior: PAD
         )
         description
       }

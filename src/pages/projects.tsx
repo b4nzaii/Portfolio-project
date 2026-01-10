@@ -1,60 +1,151 @@
 import * as React from "react";
 import { graphql, PageProps, Link } from "gatsby";
+import Fuse from "fuse.js";
 import Layout from "../components/Layout/Layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import * as s from "./projects.module.scss";
+
+type Project = {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  tech: string[] | null;
+  image: any;
+};
 
 type Data = {
-  allContentfulProject: {
-    nodes: Array<{
-      title: string;
-      slug: string;
-      description?: string | null;
-      image?: any;
-    }>;
-  };
+  allContentfulProject: { nodes: Project[] };
 };
 
 export default function ProjectsPage({ data }: PageProps<Data>) {
   const projects = data.allContentfulProject.nodes;
 
+  const [q, setQ] = React.useState("");
+  const [activeTech, setActiveTech] = React.useState<string>("All");
+
+  const techOptions = React.useMemo(() => {
+    const all = projects
+      .flatMap((p) => p.tech ?? [])
+      .filter((t): t is string => Boolean(t)); // Remove null/undefined
+
+    return [
+      "All",
+      ...Array.from(new Set(all)).sort((a, b) => a.localeCompare(b)),
+    ];
+  }, [projects]);
+
+  const filtered = React.useMemo(() => {
+    if (activeTech === "All") return projects;
+    return projects.filter((p) => p.tech?.includes(activeTech));
+  }, [projects, activeTech]);
+
+  const fuse = React.useMemo(
+    () =>
+      new Fuse(filtered, {
+        keys: ["title", "description", "tech"],
+        threshold: 0.35,
+      }),
+    [filtered]
+  );
+
+  const results =
+    q.trim() === "" ? filtered : fuse.search(q.trim()).map((r) => r.item);
+
   return (
     <Layout>
-      <section
-        style={{ maxWidth: 1200, margin: "0 auto", padding: "4rem 1rem" }}
-      >
-        <h1>Projects</h1>
+      <main className={s.page}>
+        <header className={s.heading}>
+          <h1 className={s.h1}>Selected Works</h1>
+          <p className={s.lead}>
+            My collection of projects, although not exhaustive, there is some
+            variety 😅
+          </p>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "2rem",
-            marginTop: "2rem",
-          }}
-        >
-          {projects.map((p) => {
-            const img = p.image ? getImage(p.image) : null;
+          <div className={s.searchRow}>
+            <input
+              type="search"
+              className={s.search}
+              placeholder="Search projects…"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
 
-            return (
-              <article key={p.slug}>
-                {img && (
-                  <GatsbyImage
-                    image={img}
-                    alt={p.title}
-                    style={{ borderRadius: 8 }}
-                  />
-                )}
+            <div className={s.chips}>
+              {techOptions.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  className={activeTech === t ? s.chipActive : s.chip}
+                  onClick={() => setActiveTech(t)}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+        </header>
 
-                <h2 style={{ marginTop: "1rem" }}>{p.title}</h2>
+        <section className={s.grid}>
+          {results.length === 0 ? (
+            <p className={s.empty}>No projects found matching your search.</p>
+          ) : (
+            results.map((p) => {
+              const img = getImage(p.image);
+              const techArray = Array.isArray(p.tech) ? p.tech : [];
+              const tags = techArray.filter(Boolean).slice(0, 3);
 
-                {p.description && <p>{p.description}</p>}
+              return (
+                <article key={p.id} className={s.card}>
+                  <div className={s.media}>
+                    {img && <GatsbyImage image={img} alt={p.title} />}
+                    {tags[0] && <span className={s.badge}>{tags[0]}</span>}
+                  </div>
 
-                <Link to={`/projects/${p.slug}`}>View project →</Link>
-              </article>
-            );
-          })}
-        </div>
-      </section>
+                  <div className={s.body}>
+                    <h3 className={s.cardTitle}>{p.title}</h3>
+                    <p className={s.desc}>{p.description}</p>
+
+                    {tags.length > 0 && (
+                      <div className={s.tags}>
+                        {tags.map((t) => (
+                          <span key={t} className={s.tag}>
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <Link className={s.linkBtn} to={`/projects/${p.slug}`}>
+                      View Project <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </article>
+              );
+            })
+          )}
+        </section>
+
+        <section className={s.cta}>
+          <h2 className={s.ctaTitle}>Ready to start a project?</h2>
+          <p className={s.ctaText}>
+            Let's collaborate and build something amazing together.
+          </p>
+          <div className={s.ctaBtns}>
+            <Link to="/contact" className={s.ctaPrimary}>
+              Contact Me <span aria-hidden="true">✉</span>
+            </Link>
+            <a
+              className={s.ctaSecondary}
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Resume <span aria-hidden="true">📄</span>
+            </a>
+          </div>
+        </section>
+      </main>
     </Layout>
   );
 }
@@ -63,12 +154,15 @@ export const query = graphql`
   query ProjectsPageQuery {
     allContentfulProject(sort: { createdAt: DESC }) {
       nodes {
+        id
         title
         slug
         description
+        tech
         image {
           gatsbyImageData(
-            width: 800
+            width: 900
+            height: 520
             placeholder: BLURRED
             formats: [AUTO, WEBP, AVIF]
           )

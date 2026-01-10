@@ -21,7 +21,7 @@ export default function ContactPage({ data }: PageProps<Data>) {
     return (
       <Layout>
         <h1>Contact</h1>
-        <p>Ingen Contentful Page hittades med slug "contact".</p>
+        <p>Ingen Page hittades</p>
       </Layout>
     );
   }

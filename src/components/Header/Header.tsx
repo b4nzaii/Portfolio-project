@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "gatsby";
+import { Link, graphql, useStaticQuery } from "gatsby";
 import * as s from "./Header.module.scss";
 
 function applyTheme(theme: "light" | "dark") {
@@ -9,7 +9,35 @@ function applyTheme(theme: "light" | "dark") {
   localStorage.setItem("theme", theme);
 }
 
+type Q = {
+  allContentfulNavigation: {
+    nodes: Array<{
+      title?: string | null;
+      items?: Array<{
+        label: string;
+        path: string;
+        order?: number | null;
+      }> | null;
+    }>;
+  };
+};
+
 export default function Header() {
+  const data = useStaticQuery<Q>(graphql`
+    query HeaderNavQuery {
+      allContentfulNavigation(limit: 1) {
+        nodes {
+          title
+          items {
+            label
+            path
+            order
+          }
+        }
+      }
+    }
+  `);
+
   const [theme, setTheme] = React.useState<"light" | "dark">("light");
 
   React.useEffect(() => {
@@ -25,11 +53,15 @@ export default function Header() {
     applyTheme(next);
   };
 
+  const navItems =
+    data.allContentfulNavigation.nodes[0]?.items
+      ?.slice()
+      .sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) ?? [];
+
   return (
     <header className={s.header}>
       <div className={s.container}>
         <div className={s.bar}>
-          {/* Brand */}
           <Link to="/" className={s.brand}>
             <span className={s.brandIcon} aria-hidden="true">
               {"</>"}
@@ -37,40 +69,20 @@ export default function Header() {
             <span className={s.brandText}>Måns Henrikssons Portfolio</span>
           </Link>
 
-          {/* Desktop navigation */}
           <div className={s.desktop}>
             <nav className={s.nav}>
-              <Link
-                to="/"
-                className={s.navLink}
-                activeClassName={s.navLinkActive}
-              >
-                Home
-              </Link>
-              <Link
-                to="/projects"
-                className={s.navLink}
-                activeClassName={s.navLinkActive}
-              >
-                Projects
-              </Link>
-              <Link
-                to="/about"
-                className={s.navLink}
-                activeClassName={s.navLinkActive}
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                className={s.navLink}
-                activeClassName={s.navLinkActive}
-              >
-                Contact
-              </Link>
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={s.navLink}
+                  activeClassName={s.navLinkActive}
+                >
+                  {item.label}
+                </Link>
+              ))}
             </nav>
 
-            {/* Actions */}
             <div className={s.actions}>
               <button
                 type="button"
@@ -79,14 +91,12 @@ export default function Header() {
               >
                 {theme === "dark" ? "Light" : "Dark"}
               </button>
-
               <Link to="/contact" className={s.ctaBtn}>
                 Get in Touch
               </Link>
             </div>
           </div>
 
-          {/* Mobile menu button (implementation later) */}
           <button className={s.mobileBtn} type="button" aria-label="Open menu">
             ☰
           </button>

@@ -5,7 +5,7 @@ import "./PageContent.scss";
 
 type PageContentProps = {
   title: string;
-  lead?: string | null; // ← ÄNDRAT: lead är string
+  lead?: string | null;
   body?: { raw: string } | null;
   image?: any;
 };

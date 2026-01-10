@@ -82,17 +82,26 @@
   }
 }
 
-.accent {
-  color: var(--primary);
+.quote {
+  color: #1e40af; /* Dark blue for light mode WCAG AA+ (4.5:1 contrast) */
+}
+
+:global(html.theme-dark) .quote {
+  color: lightskyblue; /* Light blue for dark mode WCAG AA+ (7:1 contrast) */
 }
 
 .lead {
   font-size: 18px;
   line-height: 1.65;
-  color: var(--muted);
+  color: #374151; /* Dark gray for light mode WCAG AAA (11:1 contrast) */
   max-width: 640px;
   margin: 0 auto;
 }
+
+:global(html.theme-dark) .lead {
+  color: #d1d5db; /* Light gray for dark mode WCAG AAA (10:1 contrast) */
+}
+
 @media (min-width: 1024px) {
   .lead {
     margin: 0;
@@ -153,12 +162,12 @@
 }
 
 .stack {
-  margin-top: 24px;
+  margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   align-items: center;
 }
 @media (min-width: 1024px) {
@@ -172,31 +181,58 @@
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(120, 130, 150, 0.9);
+  color: #4b5563; /* Medium-dark gray for light mode WCAG AA (7:1 contrast) */
 }
 
-.stackDots {
-  display: flex;
-  gap: 14px;
-  opacity: 0.7;
-  filter: grayscale(1);
-  transition: filter 200ms ease, opacity 200ms ease;
-}
-.stackDots:hover {
-  filter: grayscale(0);
-  opacity: 1;
+:global(html.theme-dark) .stackLabel {
+  color: #9ca3af; /* Light gray for dark mode WCAG AA (7:1 contrast) */
 }
 
-.stackDots span {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.08);
-}
-:global(html.theme-dark) .stackDots span {
-  background: rgba(255, 255, 255, 0.12);
+.stackIcons {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 16px;
+  max-width: 100%;
 }
 
+.stackIcon {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.85;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.1);
+    opacity: 1;
+  }
+}
+// Fix så att specifikt express ikonen syns i dark mode..
+.stackIcon2 {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  opacity: 0.85;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.1);
+    opacity: 1;
+  }
+
+  :global(html.theme-dark) & {
+    filter: brightness(0) invert(1);
+  }
+}
+@media (max-width: 768px) {
+  .stackIcons {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stackIcons {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
 .media {
   display: flex;
   justify-content: center;
@@ -267,4 +303,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.bodyText {
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 14px;
+  max-width: 640px;
+}
+
+.bodyText p {
+  margin: 10px 0 0;
 }

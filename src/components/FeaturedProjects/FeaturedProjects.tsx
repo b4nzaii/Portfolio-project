@@ -45,10 +45,7 @@ export default function FeaturedProjects() {
             <p className={s.kicker}>Portfolio</p>
             <h2 className={s.title}>Featured Work</h2>
           </div>
-          <p className={s.sub}>
-            A curated selection of my recent work, focusing on performance,
-            accessibility, and user experience.
-          </p>
+          <p className={s.sub}></p>
         </div>
 
         <div className={s.grid}>

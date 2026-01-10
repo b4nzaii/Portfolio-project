@@ -21,7 +21,7 @@ export default function AboutPage({ data }: PageProps<Data>) {
     return (
       <Layout>
         <h1>About</h1>
-        <p>Ingen Contentful Page hittades med slug "about".</p>
+        <p>Ingen Page hittades</p>
       </Layout>
     );
   }
