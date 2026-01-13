@@ -39,6 +39,7 @@ export default function Hero() {
   const data = useStaticQuery<Q>(graphql`
     query HomeHeroQuery {
       contentfulPage(slug: { eq: "home" }) {
+        title
         lead
         body {
           raw
@@ -90,11 +91,13 @@ export default function Hero() {
       <div className={s.container}>
         <div className={s.grid}>
           <div className={s.copy}>
-            <h1 className={s.title}>
-              <span className={s.quote}>
-                Måns Henriksson Frontend Developer
-              </span>
-            </h1>
+            {page?.title ? (
+              <h1 className={s.title}>
+                <span className={s.quote}>{page.title}</span>
+              </h1>
+            ) : null}
+
+            {page?.lead ? <p className={s.lead}>{page.lead}</p> : null}
 
             {leadText ? <p className={s.lead}>{leadText}</p> : null}
 

@@ -98,7 +98,6 @@
   max-width: 640px;
   margin: 0 auto;
 }
-
 :global(html.theme-dark) .lead {
   color: #d1d5db; /* Light gray for dark mode WCAG AAA (10:1 contrast) */
 }
@@ -111,15 +110,17 @@
 
 .bodyText {
   color: var(--muted);
-  line-height: 1.65;
-  font-size: 14px;
+  line-height: 1.66;
+  font-size: 15px;
   max-width: 640px;
 }
 
 .bodyText p {
   margin: 10px 0 0;
 }
-
+:global(html.theme-dark) .bodyText {
+  color: #ffffff;
+}
 .ctaRow {
   display: flex;
   flex-wrap: wrap;
