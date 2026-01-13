@@ -133,17 +133,15 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
           </section>
 
           <section className={s.cta}>
-            <h2 className={s.ctaTitle}>Ready to start a project?</h2>
-            <p className={s.ctaText}>
-              Let's collaborate and build something amazing together.
-            </p>
+            <h2 className={s.ctaTitle}>Want to contact me?</h2>
+            <p className={s.ctaText}>Contact me below :) </p>
             <div className={s.ctaBtns}>
               <Link to="/contact" className={s.ctaPrimary}>
                 Contact Me <span aria-hidden="true">✉</span>
               </Link>
               <a
                 className={s.ctaSecondary}
-                href="/resume.pdf"
+                href="/"
                 target="_blank"
                 rel="noreferrer"
               >

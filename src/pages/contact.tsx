@@ -1,8 +1,12 @@
+// src/pages/contact.tsx
 import * as React from "react";
 import { graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout/Layout";
-import PageContent from "../components/PageContent/PageContent";
 import SEO from "../components/SEO";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import * as s from "./contact.module.scss";
+
 type Data = {
   contentfulPage: {
     title: string;
@@ -12,32 +16,61 @@ type Data = {
   } | null;
 };
 
-export default function ContactPage({ data }: PageProps<Data>) {
+export default function ContactPage({ data, location }: PageProps<Data>) {
   const page = data.contentfulPage;
 
   if (!page) {
     return (
       <Layout>
-        <h1>Contact</h1>
-        <p>Ingen Page hittades</p>
+        <main className={s.page}>
+          <div className={s.container}>
+            <h1 className={s.title}>Contact</h1>
+            <p className={s.lead}>Ingen Page hittades</p>
+          </div>
+        </main>
       </Layout>
     );
   }
 
+  const img = page.image ? getImage(page.image) : null;
+  const bodyDoc = page.body?.raw ? JSON.parse(page.body.raw) : null;
+
   return (
     <>
       <SEO
-        title="Måns Henriksson -Frontend Developer"
-        description="Frontend developer passionate about creating modern and accessible web experiences."
-        pathname="/"
+        title={`${page.title} | Måns Henriksson`}
+        description={page.lead ?? "Contact Måns Henriksson"}
+        pathname={location.pathname}
       />
+
       <Layout>
-        <PageContent
-          title={page.title}
-          lead={page.lead ?? null}
-          body={page.body}
-          image={page.image}
-        />
+        <main className={s.page}>
+          <div className={s.container}>
+            <div className={s.grid}>
+              <div className={s.copy}>
+                <h1 className={s.title}>{page.title}</h1>
+                {page.lead ? <p className={s.lead}>{page.lead}</p> : null}
+
+                {bodyDoc ? (
+                  <div className={s.prose}>
+                    {documentToReactComponents(bodyDoc)}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className={s.media}>
+                {img ? (
+                  <GatsbyImage
+                    className={s.image}
+                    image={img}
+                    alt={page.title}
+                    imgStyle={{ objectFit: "cover", objectPosition: "center" }}
+                  />
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </main>
       </Layout>
     </>
   );
@@ -62,13 +95,3 @@ export const query = graphql`
     }
   }
 `;
-
-export const Head = ({ data }: PageProps<Data>) => {
-  const page = data.contentfulPage;
-  return (
-    <>
-      <title>{page?.title ?? "Contact"}</title>
-      <meta name="description" content={page?.lead ?? ""} />
-    </>
-  );
-};

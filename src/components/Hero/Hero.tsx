@@ -65,7 +65,7 @@ export default function Hero() {
   const projects = data.allContentfulProject.nodes.filter((p) => p.image);
 
   const [i, setI] = React.useState(0);
-  // Slider effect
+
   React.useEffect(() => {
     if (projects.length <= 1) return;
     const t = window.setInterval(() => {
