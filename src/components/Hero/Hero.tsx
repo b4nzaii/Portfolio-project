@@ -23,7 +23,7 @@ import * as s from "./Hero.module.scss";
 type Q = {
   contentfulPage: {
     title: string;
-    lead?: { lead?: string | null } | null;
+    lead?: string | null;
     body?: { raw: string } | null;
   } | null;
   allContentfulProject: {
@@ -39,9 +39,7 @@ export default function Hero() {
   const data = useStaticQuery<Q>(graphql`
     query HomeHeroQuery {
       contentfulPage(slug: { eq: "home" }) {
-        lead {
-          lead
-        }
+        lead
         body {
           raw
         }
@@ -76,7 +74,7 @@ export default function Hero() {
     return () => window.clearInterval(t);
   }, [projects.length]);
 
-  const leadText = page?.lead?.lead ?? "";
+  const leadText = page?.lead ?? "";
   const bodyDoc = page?.body?.raw ? JSON.parse(page.body.raw) : null;
 
   const active = projects.length ? projects[i] : null;

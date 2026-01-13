@@ -4,7 +4,7 @@ import Fuse from "fuse.js";
 import Layout from "../components/Layout/Layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import * as s from "./projects.module.scss";
-
+import SEO from "../components/SEO";
 type Project = {
   id: string;
   title: string;
@@ -53,100 +53,107 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
     q.trim() === "" ? filtered : fuse.search(q.trim()).map((r) => r.item);
 
   return (
-    <Layout>
-      <main className={s.page}>
-        <header className={s.heading}>
-          <h1 className={s.h1}>Selected Works</h1>
-          <p className={s.lead}>
-            My collection of projects, although not exhaustive, there is some
-            variety 😅
-          </p>
+    <>
+      <SEO
+        title="Måns Henriksson -Frontend Developer"
+        description="Frontend developer passionate about creating modern and accessible web experiences."
+        pathname="/"
+      />
+      <Layout>
+        <main className={s.page}>
+          <header className={s.heading}>
+            <h1 className={s.h1}>Selected Works</h1>
+            <p className={s.lead}>
+              My collection of projects, although not exhaustive, there is some
+              variety 😅
+            </p>
 
-          <div className={s.searchRow}>
-            <input
-              type="search"
-              className={s.search}
-              placeholder="Search projects…"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
+            <div className={s.searchRow}>
+              <input
+                type="search"
+                className={s.search}
+                placeholder="Search projects…"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+              />
 
-            <div className={s.chips}>
-              {techOptions.map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  className={activeTech === t ? s.chipActive : s.chip}
-                  onClick={() => setActiveTech(t)}
-                >
-                  {t}
-                </button>
-              ))}
+              <div className={s.chips}>
+                {techOptions.map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className={activeTech === t ? s.chipActive : s.chip}
+                    onClick={() => setActiveTech(t)}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        <section className={s.grid}>
-          {results.length === 0 ? (
-            <p className={s.empty}>No projects found matching your search.</p>
-          ) : (
-            results.map((p) => {
-              const img = getImage(p.image);
-              const techArray = Array.isArray(p.tech) ? p.tech : [];
-              const tags = techArray.filter(Boolean).slice(0, 3);
+          <section className={s.grid}>
+            {results.length === 0 ? (
+              <p className={s.empty}>No projects found matching your search.</p>
+            ) : (
+              results.map((p) => {
+                const img = getImage(p.image);
+                const techArray = Array.isArray(p.tech) ? p.tech : [];
+                const tags = techArray.filter(Boolean).slice(0, 3);
 
-              return (
-                <article key={p.id} className={s.card}>
-                  <div className={s.media}>
-                    {img && <GatsbyImage image={img} alt={p.title} />}
-                    {tags[0] && <span className={s.badge}>{tags[0]}</span>}
-                  </div>
+                return (
+                  <article key={p.id} className={s.card}>
+                    <div className={s.media}>
+                      {img && <GatsbyImage image={img} alt={p.title} />}
+                      {tags[0] && <span className={s.badge}>{tags[0]}</span>}
+                    </div>
 
-                  <div className={s.body}>
-                    <h3 className={s.cardTitle}>{p.title}</h3>
-                    <p className={s.desc}>{p.description}</p>
+                    <div className={s.body}>
+                      <h3 className={s.cardTitle}>{p.title}</h3>
+                      <p className={s.desc}>{p.description}</p>
 
-                    {tags.length > 0 && (
-                      <div className={s.tags}>
-                        {tags.map((t) => (
-                          <span key={t} className={s.tag}>
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                      {tags.length > 0 && (
+                        <div className={s.tags}>
+                          {tags.map((t) => (
+                            <span key={t} className={s.tag}>
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      )}
 
-                    <Link className={s.linkBtn} to={`/projects/${p.slug}`}>
-                      View Project <span aria-hidden="true">→</span>
-                    </Link>
-                  </div>
-                </article>
-              );
-            })
-          )}
-        </section>
+                      <Link className={s.linkBtn} to={`/projects/${p.slug}`}>
+                        View Project <span aria-hidden="true">→</span>
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })
+            )}
+          </section>
 
-        <section className={s.cta}>
-          <h2 className={s.ctaTitle}>Ready to start a project?</h2>
-          <p className={s.ctaText}>
-            Let's collaborate and build something amazing together.
-          </p>
-          <div className={s.ctaBtns}>
-            <Link to="/contact" className={s.ctaPrimary}>
-              Contact Me <span aria-hidden="true">✉</span>
-            </Link>
-            <a
-              className={s.ctaSecondary}
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View Resume <span aria-hidden="true">📄</span>
-            </a>
-          </div>
-        </section>
-      </main>
-    </Layout>
+          <section className={s.cta}>
+            <h2 className={s.ctaTitle}>Ready to start a project?</h2>
+            <p className={s.ctaText}>
+              Let's collaborate and build something amazing together.
+            </p>
+            <div className={s.ctaBtns}>
+              <Link to="/contact" className={s.ctaPrimary}>
+                Contact Me <span aria-hidden="true">✉</span>
+              </Link>
+              <a
+                className={s.ctaSecondary}
+                href="/resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Resume <span aria-hidden="true">📄</span>
+              </a>
+            </div>
+          </section>
+        </main>
+      </Layout>
+    </>
   );
 }
 

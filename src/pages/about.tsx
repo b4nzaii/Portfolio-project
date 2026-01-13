@@ -2,13 +2,11 @@ import * as React from "react";
 import { graphql, PageProps } from "gatsby";
 import Layout from "../components/Layout/Layout";
 import PageContent from "../components/PageContent/PageContent";
-
+import SEO from "../components/SEO";
 type Data = {
   contentfulPage: {
     title: string;
-    lead?: {
-      lead?: string | null; // ← ÄNDRAT: lead är nu ett objekt med lead-prop
-    } | null;
+    lead?: string | null;
     body?: { raw: string } | null;
     image?: any;
   } | null;
@@ -27,14 +25,21 @@ export default function AboutPage({ data }: PageProps<Data>) {
   }
 
   return (
-    <Layout>
-      <PageContent
-        title={page.title}
-        lead={page.lead?.lead ?? null} // ← ÄNDRAT
-        body={page.body}
-        image={page.image}
+    <>
+      <SEO
+        title="Måns Henriksson -Frontend Developer"
+        description="Frontend developer passionate about creating modern and accessible web experiences."
+        pathname="/"
       />
-    </Layout>
+      <Layout>
+        <PageContent
+          title={page.title}
+          lead={page.lead ?? null}
+          body={page.body}
+          image={page.image}
+        />
+      </Layout>
+    </>
   );
 }
 
@@ -42,9 +47,7 @@ export const query = graphql`
   query AboutPageQuery {
     contentfulPage(slug: { eq: "about" }) {
       title
-      lead {
-        lead
-      }
+      lead
       body {
         raw
       }
@@ -65,7 +68,7 @@ export const Head = ({ data }: PageProps<Data>) => {
   return (
     <>
       <title>{page?.title ?? "About"}</title>
-      <meta name="description" content={page?.lead?.lead ?? ""} />
+      <meta name="description" content={page?.lead ?? ""} />
     </>
   );
 };

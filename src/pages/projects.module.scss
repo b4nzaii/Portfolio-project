@@ -119,19 +119,25 @@
 
 .media {
   position: relative;
-  height: 190px; /* samma höjd för alla thumbnails */
+  border-radius: 16px;
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.06);
+
+  /* samma yta för alla kort */
+  aspect-ratio: 16 / 9;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
 }
 
+/* GatsbyImage wrappern */
 .media :global(.gatsby-image-wrapper) {
-  height: 100%;
-}
-
-.media :global(img) {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+}
+
+/* Själva <img> inuti GatsbyImage */
+.media :global(img) {
+  object-fit: contain !important; /* visa hela screenshoten */
   object-position: center;
 }
 

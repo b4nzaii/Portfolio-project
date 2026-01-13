@@ -3,6 +3,7 @@ import { graphql, PageProps, Link } from "gatsby";
 import Fuse from "fuse.js";
 import Layout from "../components/Layout/Layout";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
+import SEO from "../components/SEO";
 
 type Project = {
   id: string;
@@ -35,59 +36,66 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
     q.trim() === "" ? projects : fuse.search(q).map((r) => r.item);
 
   return (
-    <Layout>
-      <section
-        style={{ maxWidth: 1200, margin: "0 auto", padding: "4rem 1rem" }}
-      >
-        <h1>Projects</h1>
-
-        {/* Search */}
-        <input
-          type="search"
-          placeholder="Search projects…"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "12px 14px",
-            margin: "1.5rem 0 2.5rem",
-            fontSize: 16,
-          }}
-        />
-
-        {results.length === 0 ? <p>No projects found.</p> : null}
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "2rem",
-          }}
+    <>
+      <SEO
+        title="Måns Henriksson -Frontend Developer"
+        description="Frontend developer passionate about creating modern and accessible web experiences."
+        pathname="/"
+      />
+      <Layout>
+        <section
+          style={{ maxWidth: 1200, margin: "0 auto", padding: "4rem 1rem" }}
         >
-          {results.map((p) => {
-            const img = p.image ? getImage(p.image) : null;
+          <h1>Projects</h1>
 
-            return (
-              <article key={p.id}>
-                {img && (
-                  <GatsbyImage
-                    image={img}
-                    alt={p.title}
-                    style={{ borderRadius: 8 }}
-                  />
-                )}
+          {/* Search härr*/}
+          <input
+            type="search"
+            placeholder="Search projects…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            style={{
+              width: "100%",
+              padding: "12px 14px",
+              margin: "1.5rem 0 2.5rem",
+              fontSize: 16,
+            }}
+          />
 
-                <h2 style={{ marginTop: "1rem" }}>{p.title}</h2>
+          {results.length === 0 ? <p>No projects found.</p> : null}
 
-                {p.description ? <p>{p.description}</p> : null}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "2rem",
+            }}
+          >
+            {results.map((p) => {
+              const img = p.image ? getImage(p.image) : null;
 
-                <Link to={`/projects/${p.slug}`}>View project →</Link>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-    </Layout>
+              return (
+                <article key={p.id}>
+                  {img && (
+                    <GatsbyImage
+                      image={img}
+                      alt={p.title}
+                      style={{ borderRadius: 8 }}
+                    />
+                  )}
+
+                  <h2 style={{ marginTop: "1rem" }}>{p.title}</h2>
+
+                  {p.description ? <p>{p.description}</p> : null}
+
+                  <Link to={`/projects/${p.slug}`}>View project →</Link>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </Layout>
+    </>
   );
 }
 

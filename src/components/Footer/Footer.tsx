@@ -21,7 +21,7 @@ export default function Footer() {
             <div className={s.socialIcons}>
               <a
                 className={s.socialIcon}
-                href="https://linkedin.com/in/måns-bergström-henriksson"
+                href="https://www.linkedin.com/in/m%C3%A5ns-bergstr%C3%B6m-henriksson-823ab0210/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -93,7 +93,7 @@ export default function Footer() {
               <h4 className={s.colTitle}>Connect</h4>
               <a
                 className={s.link}
-                href="https://linkedin.com/in/måns-bergström-henriksson"
+                href="https://www.linkedin.com/in/m%C3%A5ns-bergstr%C3%B6m-henriksson-823ab0210/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -109,7 +109,7 @@ export default function Footer() {
               </a>
               <a
                 className={s.link}
-                href="https://twitter.com/yourhandle"
+                href="/"
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -1,6 +1,17 @@
 import type { GatsbyNode } from "gatsby";
 import path from "path";
 
+export const createSchemaCustomization: GatsbyNode["createSchemaCustomization"] =
+  ({ actions }) => {
+    const { createTypes } = actions;
+
+    createTypes(`
+      type ContentfulPage implements Node {
+        lead: String
+      }
+    `);
+  };
+
 export const createPages: GatsbyNode["createPages"] = async ({
   graphql,
   actions,

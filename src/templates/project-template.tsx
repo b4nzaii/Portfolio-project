@@ -7,7 +7,7 @@ import {
   Options,
 } from "@contentful/rich-text-react-renderer";
 import { BLOCKS } from "@contentful/rich-text-types";
-
+import SEO from "../components/SEO";
 type Data = {
   contentfulProject: {
     title: string;
@@ -33,61 +33,68 @@ export default function ProjectTemplate({ data }: PageProps<Data>) {
   };
 
   return (
-    <Layout>
-      <article
-        style={{ maxWidth: 960, margin: "0 auto", padding: "4rem 1rem" }}
-      >
-        <h1>{project.title}</h1>
+    <>
+      <SEO
+        title="Måns Henriksson -Frontend Developer"
+        description="Frontend developer passionate about creating modern and accessible web experiences."
+        pathname="/"
+      />
+      <Layout>
+        <article
+          style={{ maxWidth: 960, margin: "0 auto", padding: "4rem 1rem" }}
+        >
+          <h1>{project.title}</h1>
 
-        {/* BODY / DESCRIPTION */}
-        {project.body?.raw && (
-          <section style={{ marginTop: "2rem" }}>
-            {documentToReactComponents(JSON.parse(project.body.raw), options)}
-          </section>
-        )}
+          {/* BODY / DESCRIPTION */}
+          {project.body?.raw && (
+            <section style={{ marginTop: "2rem" }}>
+              {documentToReactComponents(JSON.parse(project.body.raw), options)}
+            </section>
+          )}
 
-        {/* GALLERY */}
-        {project.gallery?.length ? (
-          <section
-            style={{
-              marginTop: "3rem",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
-              gap: "1.5rem",
-            }}
-          >
-            {project.gallery.map((img, i) => {
-              const image = getImage(img);
-              return image ? (
-                <div
-                  key={i}
-                  style={{
-                    position: "relative",
-                    aspectRatio: "16 / 9",
-                    overflow: "hidden",
-                    borderRadius: "12px",
-                    backgroundColor: "rgba(0, 0, 0, 0.05)",
-                  }}
-                >
-                  <GatsbyImage
-                    image={image}
-                    alt={img.description ?? `Project image ${i + 1}`}
+          {/* GALLERY */}
+          {project.gallery?.length ? (
+            <section
+              style={{
+                marginTop: "3rem",
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
+                gap: "1.5rem",
+              }}
+            >
+              {project.gallery.map((img, i) => {
+                const image = getImage(img);
+                return image ? (
+                  <div
+                    key={i}
                     style={{
-                      width: "100%",
-                      height: "100%",
+                      position: "relative",
+                      aspectRatio: "16 / 9",
+                      overflow: "hidden",
+                      borderRadius: "12px",
+                      backgroundColor: "rgba(0, 0, 0, 0.05)",
                     }}
-                    imgStyle={{
-                      objectFit: "contain",
-                      objectPosition: "center",
-                    }}
-                  />
-                </div>
-              ) : null;
-            })}
-          </section>
-        ) : null}
-      </article>
-    </Layout>
+                  >
+                    <GatsbyImage
+                      image={image}
+                      alt={img.description ?? `Project image ${i + 1}`}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                      imgStyle={{
+                        objectFit: "contain",
+                        objectPosition: "center",
+                      }}
+                    />
+                  </div>
+                ) : null;
+              })}
+            </section>
+          ) : null}
+        </article>
+      </Layout>
+    </>
   );
 }
 
