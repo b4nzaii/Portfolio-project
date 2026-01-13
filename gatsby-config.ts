@@ -1,8 +1,8 @@
-import * as dotenv from "dotenv"
-import { GatsbyConfig } from "gatsby"
-import * as path from "path"
+import * as dotenv from "dotenv";
+import { GatsbyConfig } from "gatsby";
+import * as path from "path";
 
-dotenv.config({ path: path.resolve(process.cwd(), ".env.development") })
+dotenv.config({ path: path.resolve(process.cwd(), ".env.development") });
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -23,7 +23,8 @@ const config: GatsbyConfig = {
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
     "gatsby-plugin-sass",
+    "gatsby-plugin-react-helmet",
   ],
-}
+};
 
-export default config
+export default config;
