@@ -111,7 +111,7 @@
 .bodyText {
   color: var(--muted);
   line-height: 1.66;
-  font-size: 15px;
+  font-size: 16px;
   max-width: 640px;
 }
 
@@ -120,6 +120,9 @@
 }
 :global(html.theme-dark) .bodyText {
   color: #ffffff;
+}
+:global(html.theme-light) .bodyText {
+  color: black;
 }
 .ctaRow {
   display: flex;
