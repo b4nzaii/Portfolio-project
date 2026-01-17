@@ -7,8 +7,9 @@ function applyTheme(theme: "light" | "dark") {
   html.classList.remove("theme-dark", "theme-light");
   html.classList.add(theme === "dark" ? "theme-dark" : "theme-light");
   localStorage.setItem("theme", theme);
-}
+} // Dark / light theme toggle
 
+// Typdeklarationerna för GRAPHQL
 type Q = {
   allContentfulNavigation: {
     nodes: Array<{

@@ -30,7 +30,6 @@ export default function SEO({
       <meta name="description" content={seo.description} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      {/* Open Graph (vihar LinkedIn, Facebook, här osv.) */}
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
       <meta property="og:url" content={seo.url} />

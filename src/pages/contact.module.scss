@@ -71,7 +71,6 @@
   text-underline-offset: 2px;
 }
 
-/* Extra kontakt-box (om du vill ha en snygg sektion under texten) */
 .card {
   margin-top: 18px;
   border: 1px solid var(--border);
@@ -110,7 +109,10 @@
   color: var(--text);
   font-weight: 800;
   text-decoration: none;
-  transition: transform 160ms ease, filter 160ms ease, background 160ms ease;
+  transition:
+    transform 160ms ease,
+    filter 160ms ease,
+    background 160ms ease;
 }
 
 :global(html.theme-dark) .link {

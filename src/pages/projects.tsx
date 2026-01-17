@@ -27,7 +27,7 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
   const techOptions = React.useMemo(() => {
     const all = projects
       .flatMap((p) => p.tech ?? [])
-      .filter((t): t is string => Boolean(t)); // Remove null/undefined
+      .filter((t): t is string => Boolean(t));
 
     return [
       "All",
@@ -44,9 +44,8 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
     () =>
       new Fuse(filtered, {
         keys: ["title", "description", "tech"],
-        threshold: 0.35,
       }),
-    [filtered]
+    [filtered],
   );
 
   const results =
@@ -57,7 +56,7 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
       <SEO
         title="Måns Henriksson -Frontend Developer"
         description="Frontend developer passionate about creating modern and accessible web experiences."
-        pathname="/"
+        pathname="/projects"
       />
       <Layout>
         <main className={s.page}>

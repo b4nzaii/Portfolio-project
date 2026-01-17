@@ -67,6 +67,7 @@ export default function Hero() {
 
   const [i, setI] = React.useState(0);
 
+  // Auto showcased slider
   React.useEffect(() => {
     if (projects.length <= 1) return;
     const t = window.setInterval(() => {
@@ -225,9 +226,7 @@ export default function Hero() {
                 <div className={s.calloutBox}>
                   <p className={s.calloutTitle}>Currently showcasing</p>
                   <p className={s.calloutText}>
-                    {active
-                      ? active.title
-                      : "Add project screenshots in Contentful to enable slideshow"}
+                    {active ? active.title : "Lägg till projekt"}
                   </p>
                 </div>
               </div>

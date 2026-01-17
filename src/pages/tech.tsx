@@ -27,9 +27,8 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
     () =>
       new Fuse(projects, {
         keys: ["title", "description"],
-        threshold: 0.4,
       }),
-    [projects]
+    [projects],
   );
 
   const results =
@@ -40,7 +39,7 @@ export default function ProjectsPage({ data }: PageProps<Data>) {
       <SEO
         title="Måns Henriksson -Frontend Developer"
         description="Frontend developer passionate about creating modern and accessible web experiences."
-        pathname="/"
+        pathname="/tech"
       />
       <Layout>
         <section

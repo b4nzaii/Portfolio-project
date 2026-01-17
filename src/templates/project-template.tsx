@@ -45,20 +45,20 @@ export default function ProjectTemplate({ data }: PageProps<Data>) {
         >
           <h1>{project.title}</h1>
 
-          {/* BODY / DESCRIPTION */}
+          {/* BODY / DESCRIPTION Parse*/}
           {project.body?.raw && (
             <section style={{ marginTop: "2rem" }}>
               {documentToReactComponents(JSON.parse(project.body.raw), options)}
             </section>
           )}
 
-          {/* GALLERY */}
+          {/* Hämtar contentfuls gallery Source/data*/}
           {project.gallery?.length ? (
             <section
               style={{
                 marginTop: "3rem",
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(500px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(480px, 1fr))",
                 gap: "1.5rem",
               }}
             >
